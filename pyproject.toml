@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jeu-de-la-vie"
+dynamic = ["version"]
+description = "Jeu de la Vie de Conway : interface Tkinter, règles B/S, format RLE, détection de cycles."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Alexandre Bourgine" }, { name = "Leul" }]
+keywords = ["jeu de la vie", "game of life", "automate cellulaire", "conway", "tkinter"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Environment :: X11 Applications",
+    "Topic :: Scientific/Engineering :: Artificial Life",
+    "Natural Language :: French",
+]
+
+[project.scripts]
+jeu-de-la-vie = "jeu_de_la_vie.cli:main"
+
+[tool.setuptools]
+packages = ["jeu_de_la_vie"]
+
+[tool.setuptools.dynamic]
+version = { attr = "jeu_de_la_vie.__version__" }
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = [
+    "UP006", "UP007", "UP035", "UP045",  # on garde typing.List/Optional, compatibles Python 3.9
+    "SIM108",                            # les if/else explicites sont parfois plus lisibles
+]
