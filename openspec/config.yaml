@@ -1,0 +1,54 @@
+schema: spec-driven
+
+context: |
+  Language: French
+  All artifacts must be written in French.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Projet : simulateur du Jeu de la Vie de Conway et de ses variantes (règles B/S),
+  commencé comme projet de lycée NSI puis étendu. Auteurs : Alexandre Bourgine et Leul.
+
+  Pile technique :
+  - Python >= 3.9, bibliothèque standard uniquement (aucune dépendance externe à ajouter).
+  - Interface graphique Tkinter ; ligne de commande argparse (commande `jeu-de-la-vie`).
+  - Tests : unittest (`python3 -m unittest discover -s tests -t . -v`), y compris l'interface sous Xvfb.
+  - Lint : Ruff (line-length 120, cible py39 ; garder typing.List/Optional).
+  - CI : GitHub Actions (Ruff + tests sous Python 3.10 et 3.13 + installation du paquet).
+
+  Architecture (paquet jeu_de_la_vie/) :
+  - moteur.py : grille creuse (ensemble des cellules vivantes), historique borné, détection de cycles.
+    Ne dépend jamais de l'interface.
+  - regles.py : notation B/S, règles connues. motifs.py : bibliothèque de motifs.
+  - rle.py : format RLE (compatible Golly / LifeWiki). image.py : PNG écrit à la main (zlib + struct).
+  - cli.py : ligne de commande. interface.py : interface Tkinter (affichage incrémental).
+
+  Conventions :
+  - Code, identifiants, docstrings, messages et documentation en français.
+  - Toute nouvelle fonctionnalité est couverte par des tests unittest et documentée dans le README.
+
+rules:
+  tasks:
+    - Inclure une tâche de tests unittest et une tâche de mise à jour du README si le comportement visible change
+    - Vérifier `ruff check .` et la suite de tests avant de cocher la dernière tâche
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always state what is out of scope
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
